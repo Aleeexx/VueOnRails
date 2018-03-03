@@ -19,4 +19,4 @@
 /log/*
 /node_modules/
 tmp/cache/
-/.idea/
+.idea/*
