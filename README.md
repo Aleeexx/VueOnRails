@@ -1,4 +1,9 @@
-# VueOnRails
+### VueOnRails
+___
+### HowTo:
+* Vue Stuff is located in `/app/javascripts/`.
+* Stylesheets are still available in Rails Assets `/app/assets/...`
+* Start Puma (Rails Server) and Webpack-dev-server (Compiled Vue Assets) by using gem Foreman - after defining commands in `./Procfile` - with `foreman start` in console
 ___
 ### Done Steps:
  
