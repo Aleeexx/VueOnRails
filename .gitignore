@@ -20,3 +20,4 @@
 /node_modules/
 tmp/cache/
 .idea/
+yarn-error.log

@@ -4,7 +4,8 @@
         <div v-for="product in products" class="product-wrapper">
             <div class="product">
                 <p>Name: {{ product.name }}</p>
-                <p>Text: {{ product.text }}</p>
+                <p>Price: {{ product.price }}</p>
+                <p>Description: {{ product.description }}</p>
                 <p>
                     <router-link :to="{ name: 'ShowProduct', params: { id: product.id } }">Gehe zu {{ product.name }} </router-link>
                 </p>
@@ -20,24 +21,12 @@
         name: 'ListProduct',
         data () {
             return {
-                products: [],
                 errors: []
             }
         },
         created () {
-            this.getProducts()
         },
         methods: {
-            getProducts() {
-                axios.get('/products.json')
-                    .then((response) => {
-                        this.products = response.data;
-                    })
-                    .catch((error) => {
-                        this.errors.push(error);
-                        console.log("[ERROR - ListProduct ] Fetch data from Rails: " + error.message);
-                    });
-            }
         }
     }
 </script>
