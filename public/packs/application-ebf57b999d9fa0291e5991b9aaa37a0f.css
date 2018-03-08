@@ -1,0 +1,42 @@
+
+p[data-v-6fb8108a] {
+  font-size: 2em;
+  text-align: center;
+}
+
+p[data-v-323263a6] {
+    font-size: 2em;
+    text-align: center;
+}
+
+.product-wrapper[data-v-1659e719] {
+    position: relative;
+    float: left;
+    width: 33.33333%;
+    height: 200px;
+    margin-bottom: 50px;
+}
+.product[data-v-1659e719] {
+    position: absolute;
+    width: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    padding: 50px;
+    background-color: #fff;
+    text-align: center;
+}
+
+input[data-v-67a8ac92] {
+    outline: none;
+    padding: 10px 15px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+p[data-v-0684db5a] {
+    font-size: 2em;
+    text-align: center;
+}
+
+/*# sourceMappingURL=application-ebf57b999d9fa0291e5991b9aaa37a0f.css.map*/

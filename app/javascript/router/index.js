@@ -10,7 +10,8 @@ import products from './products.js'
 
 Vue.use(Router)
 
-const routes = [products]
+// add more with concat
+const routes = products
 
 console.log(products)
 export default new Router({
