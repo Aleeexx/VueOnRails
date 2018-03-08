@@ -11,6 +11,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "devDependencies": {
+    "vuex": "^3.0.1",
     "webpack-cli": "^2.0.10"
   }
 }

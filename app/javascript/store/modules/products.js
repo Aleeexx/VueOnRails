@@ -55,33 +55,25 @@ const actions = {
         console.log(error)
       })
   },
-  stateUpdate: () => {
+  fetchProduct: (context, id) => {
+      axios.get(`/products/${ id }.json`)
+          .then(function (response) {
+              let productIndex = state.products.findIndex(product => product.id === id)
+              console.log(respone.data + "[" + productIndex +"} ###")
 
-  },
-  stateCreate: () => {
+              if(productIndex > -1) context.commit('update', response.data)
+              else context.commit('create', response.data)
 
-  },
-  stateDelete: () => {
-
+          })
+          .catch(function (error) {
+              console.log("[ERROR] fetchProduct()" + error)
+          })
   }
 }
 
 const getters = {
   getProduct: (state) => (id) => {
-    let productIndex = state.products.findIndex(product => product.id === id)
 
-    axios.get(`/products/${ id }.json`)
-      .then(function (response) {
-        if(productIndex != -1) {
-          actions.create('ShowProduct', response.data)
-        }
-        else {
-
-        }
-      })
-      .catch(function (error) {
-          console.log(error)
-      })
 
     return state.products.find(product => product.id === id)
   },

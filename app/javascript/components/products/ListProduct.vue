@@ -1,7 +1,7 @@
 <template>
     <div id='product'>
         <h2>ListProduct</h2>
-        <div v-for="product in products" class="product-wrapper">
+        <!--<div v-for="product in products" class="product-wrapper">
             <div class="product">
                 <p>Name: {{ product.name }}</p>
                 <p>Price: {{ product.price }}</p>
@@ -9,7 +9,7 @@
                 <p>
                     <router-link :to="{ name: 'ShowProduct', params: { id: product.id } }">Gehe zu {{ product.name }} </router-link>
                 </p>
-            </div>
+            </div>-->
         </div>
     </div>
 </template>

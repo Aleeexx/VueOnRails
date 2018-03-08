@@ -4,6 +4,8 @@ import store from '../store/'
 import router from '../router/'
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    console.log(store)
     const el = document.body.appendChild(document.createElement('app'))
     const app = new Vue({
         el,
