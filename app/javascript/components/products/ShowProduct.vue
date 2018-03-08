@@ -20,10 +20,10 @@
             }
         },
         created () {
-            this.getProduct()
+
         },
         methods: {
-            getProduct() {
+            getPrasdasdasdoduct() {
                 axios.get(`/products/${this.$route.params.id}.json`)
                     .then((response) => {
                         this.product = response.data;

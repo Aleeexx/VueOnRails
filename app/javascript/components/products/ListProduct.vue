@@ -24,7 +24,8 @@
                 errors: []
             }
         },
-        created () {
+        created: {
+
         },
         methods: {
         }

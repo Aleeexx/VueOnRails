@@ -5,24 +5,24 @@ const state = {
 }
 
 const mutations = {
-  updateCampaigns: (state, campaigns) => {
-    state.products = campaigns
+  updateProducts: (state, products) => {
+    state.products = products
   },
-  update: (state, persistedCampaign) => {
-    var indexCampaign = state.products.findIndex(campaign => campaign.id === persistedCampaign.id)
-    state.products.splice(indexCampaign, 1, persistedCampaign)
+  update: (state, persistedProduct) => {
+    var indexProduct = state.products.findIndex(product => product.id === persistedProduct.id)
+    state.products.splice(indexProduct, 1, persistedProduct)
   },
-  create: (state, persistedCampaign) => {
-    state.products.push(persistedCampaign)
+  create: (state, persistedProduct) => {
+    state.products.push(persistedProduct)
   },
-  delete: (state, deleteCampaign) => {
-    var indexCampaign = state.products.findIndex(campaign => campaign.id === deleteCampaign.id)
-    state.products.splice(indexCampaign, 1)
+  delete: (state, deleteProduct) => {
+    var indexProduct = state.products.findIndex(product => product.id === deleteProduct.id)
+    state.products.splice(indexProduct, 1)
   }
 }
 
 const actions = {
-  updateCampaigns: (context, campaigns) => {
+  updateProducts: (context, products) => {
     axios.get('/products.json')
       .then(function (response) {
       })
@@ -30,7 +30,16 @@ const actions = {
         console.log(error)
       })
   },
-  update: (context, transientCampaign) => {
+  update: (context, transientProduct) => {
+    axios.get('/products.json')
+      .then(function (response) {
+
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
+  create: (context, transientProduct) => {
     axios.get('/products.json')
       .then(function (response) {
       })
@@ -38,30 +47,45 @@ const actions = {
         console.log(error)
       })
   },
-  create: (context, transientCampaign) => {
+  delete: (context, product) => {
     axios.get('/products.json')
       .then(function (response) {
       })
       .catch(function (error) {
         console.log(error)
       })
-    },
-  delete: (context, campaign) => {
-    axios.get('/products.json')
-      .then(function (response) {
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-    }
+  },
+  stateUpdate: () => {
+
+  },
+  stateCreate: () => {
+
+  },
+  stateDelete: () => {
+
   }
 }
 
 const getters = {
-  getCampaign: (state) => (id) => {
-    return state.products.find(campaign => campaign.id === id)
+  getProduct: (state) => (id) => {
+    let productIndex = state.products.findIndex(product => product.id === id)
+
+    axios.get(`/products/${ id }.json`)
+      .then(function (response) {
+        if(productIndex != -1) {
+          actions.create('ShowProduct', response.data)
+        }
+        else {
+
+        }
+      })
+      .catch(function (error) {
+          console.log(error)
+      })
+
+    return state.products.find(product => product.id === id)
   },
-  getCampaigns: (state) => {
+  getProducts: (state) => {
     return state.products
   }
 }
