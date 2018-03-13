@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 20180308210552) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.float "price"
+    t.decimal "price", precision: 8, scale: 2
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

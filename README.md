@@ -1,11 +1,15 @@
-### VueOnRails
+## VueOnRails
+
+### Todo
+* Get Statemanager running
+* Fetch Data on example component product is _created_ (and save into Vuex)
 ___
-### HowTo:
+#### HowTo:
 * Vue Stuff is located in `/app/javascripts/`.
 * Stylesheets are still available in Rails Assets `/app/assets/...`
 * Start Puma (Rails Server) and Webpack-dev-server (Compiled Vue Assets) by using gem Foreman - after defining commands in `./Procfile` - with `foreman start` in console
 ___
-### Done Steps:
+#### Done Steps:
  
 ##### Create Rails App 
 `rails new RailsApi`
