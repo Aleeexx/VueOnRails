@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from '../app.vue'
 import store from '../store/'
 import router from '../router/'
+import regeneratorRuntime from "regenerator-runtime";
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el,
         store,
         router,
+        regeneratorRuntime,
         render: h => h(App)
     })
 })

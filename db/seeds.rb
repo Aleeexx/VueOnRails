@@ -8,19 +8,22 @@
 
 products = Product.create([
   {
-      name: 'Television',
+      name: 'Television1',
       price: 879.95,
       description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.'
-  },  {
-      name: 'Television',
+  },
+  {
+      name: 'Smartphone2',
       price: 879.95,
       description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.'
-  },  {
-      name: 'Television',
+  },
+  {
+      name: 'Toaster3',
       price: 879.95,
       description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.'
-  },  {
-      name: 'Television',
+  },
+  {
+      name: 'Ott5',
       price: 879.95,
       description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.'
   }

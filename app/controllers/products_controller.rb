@@ -13,10 +13,6 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
-    puts '#############'
-    puts @product.inspect
-    puts '#############'
-
     respond_to do |format|
       format.json { render :json => @product }
     end

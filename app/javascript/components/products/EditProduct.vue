@@ -1,9 +1,12 @@
 <template>
     <div id='product'>
         <h2>EditProduct</h2>
-        Name: {{ product.name }} <br>
-        Text: {{ product.text }}
-        <p>Hier klicken > <a @click="deleteProduct">{{ product.name }} löschen?</a> <</p>
+        <div class="product" v-if="product">
+            Name: <input type="text" v-model="product.name" /> <br>
+            Price: <input type="number" v-model="product.price" /> <br>
+            Description: <input type="textarea" v-model="product.description" />
+            <p>Hier klicken > <a @click="editProduct">{{ product.name }} löschen?</a> <</p>
+        </div>
     </div>
 </template>
 
@@ -14,42 +17,30 @@
         name: 'EditProduct',
         data () {
             return {
-                product: {},
+                product: Object.assign({}, this.editProduct()),
                 errors: []
             }
         },
         created () {
-            this.getProduct()
         },
         methods: {
-            getProduct() {
-                axios.get(`/products/${this.$route.params.id}/edit.json`)
-                    .then((response) => {
-                        this.product = response.data;
-                    })
-                    .catch((error) => {
-                        this.errors.push(error);
-                        console.log("[ERROR - EditProduct ] Fetch data from Rails: " + error.message);
-                    });
-            },
-            editProduct() {
+            editProduct: function () {
+                this.fetch()
+                if(this.$store.getters.getProduct(this.$route.params.id)) {
+                    console.log("asd")
+                    return this.$store.getters.getProduct(this.$route.params.id)
+                } else {
+                    console.log("cdefg")
+                    setTimeout(() => {
+                        return this.$store.getters.getProduct(this.$route.params.id)
+                    }, 3000)
+                }
 
             },
-            deleteProduct() {
-                axios.delete(`/products/${this.$route.params.id}.json`, {
-                    data: {
-                        id: this.$route.params.id,
-                        authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
-                    }
-                })
-                    .then((response) => {
-                        this.$router.push({ name: 'ListProduct' });
-                    })
-                    .catch((error) => {
-                        this.errors.push(error);
-                        console.log("[ERROR] Delete Product from Rails: " + error.message);
-                    });
+            fetch: function() {
+                return this.$store.dispatch('fetchProduct', this.$route.params.id)
             }
+
         }
     }
 </script>
