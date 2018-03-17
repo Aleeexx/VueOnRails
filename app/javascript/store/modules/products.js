@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '../../router'
 
 const state = {
   products: []
@@ -17,8 +18,9 @@ const mutations =  {
         if(pos === -1) pos = state.products.length
         state.products.splice(pos, 0, product)
     },
-    delete: () => {
-
+    delete: (state, id) => {
+        let pos = state.products.findIndex(stateProduct => stateProduct.id === id)
+        state.products.splice(pos, 1)
     }
 
 
@@ -35,145 +37,80 @@ const actions = {
             })
     },
     fetchProduct: (context, id) => {
-        axios.get(`/products/${id}.json`)
-            .then((response) => {
-                let productStateIndex = context.state.products.findIndex(stateProduct => stateProduct.id === response.data.id)
+        return new Promise((resolve, reject) => {
+            axios.get(`/products/${id}.json`)
+                .then((response) => {
+                    let productStateIndex = context.state.products.findIndex(stateProduct => stateProduct.id === response.data.id)
+                    if(productStateIndex === -1) context.commit('create', response.data)
+                    else context.commit('update', response.data)
+                    resolve()
+                })
+                .catch((error) => {
+                    console.log("[ERROR] fetchProduct()" + error)
+                    reject()
+                })
 
-                if(productStateIndex === -1) context.commit('create', response.data)
-                else context.commit('update', response.data)
-            })
-            .catch((error) => {
-                console.log("[ERROR] fetchProduct()" + error)
-            })
-    },
-    editProduct: (context) => {
-        axios.post(`/products/${id}.json`, {  })
-            .then((response) => {
-                context.commit('update', response.data)
-            })
-            .catch((error) => {
-                console.log("[ERROR] fetchProduct()" + error)
-            })
-    },
-    deleteProduct: (context, id) => {
-      console.log("delete")
-      /*
-        axios.delete(`/products/${id}.json`, {
-            data: {
-                id: id,
-                authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
-            }
         })
+    },
+    update: (context, product) => {
+        console.log(product)
+        let data =  {
+            product: {
+                name: product.name,
+                price: product.price,
+                description: product.description
+            },
+            authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
+        }
+        axios.put(`/products/${product.id}.json`, data)
             .then((response) => {
-                this.$router.push({ name: 'ListProduct' });
+                context.commit('update', product)
             })
             .catch((error) => {
-                this.errors.push(error);
+                console.log("[ERROR] fetchProduct()" + error)
+            })
+    },
+    delete: (context, id) => {
+        let data = {
+            id: id,
+            authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
+        }
+
+        axios.delete(`/products/${id}.json`, {data: data})
+            .then((response) => {
+                console.log(response)
+                context.commit('delete', id)
+                router.push({ name: 'ListProduct' })
+            })
+            .catch((error) => {
                 console.log("[ERROR] Delete Product from Rails: " + error.message);
+            })
+    },
+    create: (context, product) =>{
+        const data = {
+            name: product.name,
+            price: product.price,
+            description: product.description,
+            authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
+        };
+        axios.post('/products.json', data)
+            .then((response) => {
+                console.log('YOYOYO')
+                console.log(response)
+                context.commit('create', response.data)
+                router.push({ name: 'ListProduct' })
+            })
+            .catch((error) => {
+                console.log("[ERROR - NewProduct] Post data to Rails: " + error.message);
             });
-            */
+
     }
 }
 
 const getters = {
   getProducts: (state) => state.products,
-  getProduct: (state) => (id) => {
-    /*
-    console.log("id:" + id)
-    console.log("state.product:")
-    console.log(state.products)
-    */
-    return state.products.find(stateProduct => stateProduct.id == id)
-  }
+  getProduct: (state) => (id) => state.products.find(stateProduct => stateProduct.id == id)
 }
-
-/*
-const state = {
-  products: []
-}
-
-const mutations = {
-  setProducts: (state, products) => {
-    state.products = products
-  },
-  updateProducts: (state, products) => {
-    state.products = products
-  },
-  update: (state, persistedProduct) => {
-    var indexProduct = state.products.findIndex(product => product.id === persistedProduct.id)
-    state.products.splice(indexProduct, 1, persistedProduct)
-  },
-  create: (state, persistedProduct) => {
-    state.products.push(persistedProduct)
-  },
-  delete: (state, deleteProduct) => {
-    var indexProduct = state.products.findIndex(product => product.id === deleteProduct.id)
-    state.products.splice(indexProduct, 1)
-  }
-}
-
-const actions = {
-  updateProducts: (context, products) => {
-    axios.get('/products.json')
-      .then(function (response) {
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  },
-  update: (context, transientProduct) => {
-    axios.get('/products.json')
-      .then(function (response) {
-
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  },
-  create: (context, transientProduct) => {
-    axios.get('/products.json')
-      .then(function (response) {
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  },
-  delete: (context, product) => {
-    axios.get('/products.json')
-      .then(function (response) {
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  },
-  fetchProduct: (context, id) => {
-      axios.get(`/products/${ id }.json`)
-          .then(function (response) {
-              let productIndex = state.products.findIndex(product => product.id === id)
-              console.log(respone.data + "[" + productIndex +"} ###")
-
-              if(productIndex > -1) context.commit('update', response.data)
-              else context.commit('create', response.data)
-
-          })
-          .catch(function (error) {
-              console.log("[ERROR] fetchProduct()" + error)
-          })
-  }
-}
-
-const getters = {
-  getProduct: (state) => (id) => {
-
-
-    return state.products.find(product => product.id === id)
-  },
-  getProducts: (state) => {
-    return state.products
-  }
-}
-
-*/
 export default {
   state,
   mutations,

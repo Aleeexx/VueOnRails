@@ -1,6 +1,10 @@
 <template>
     <div id='product'>
         <h2>ListProduct</h2>
+        <p>
+            <router-link :to="{ name: 'NewProduct' }">Neues Product</router-link>
+        </p>
+
         <div v-for="product in products" class="product-wrapper">
             <div class="product">
                 <p>Name: {{ product.name }}</p>
@@ -8,6 +12,9 @@
                 <p>Description: {{ product.description }}</p>
                 <p>
                     <router-link :to="{ name: 'ShowProduct', params: { id: product.id } }">Gehe zu {{ product.name }} </router-link>
+                </p>
+                <p>
+                    <router-link :to="{ name: 'EditProduct', params: { id: product.id } }">Bearbeite {{ product.name }} </router-link>
                 </p>
             </div>
         </div>

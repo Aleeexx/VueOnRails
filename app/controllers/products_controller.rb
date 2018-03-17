@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
     respond_to do |format|
       if @product.save
-        format.json { render :json => {status: 'success'}, status: :created}
+        format.json { render :json => @product, status: :created}
       else
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
@@ -47,7 +47,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.json { render :show, status: :ok, location: @product }
+        format.json { render :json => {status: 'success'}, status: :ok}
       else
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end

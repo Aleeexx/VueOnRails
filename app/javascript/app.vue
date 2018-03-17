@@ -2,7 +2,6 @@
   <div id="app">
 
     <router-link :to="{ name: 'ListProduct' }">ListProducts</router-link>
-    <router-link :to="{ name: 'EditProduct', params: {id: 1} }">EditProducts</router-link>
     <!--<router-link :to="{ name: 'Home' }">Home</router-link> |
     <router-link :to="{ name: 'NewProduct' }">NewProduct</router-link>-->
     <router-view/>

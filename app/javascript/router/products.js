@@ -16,7 +16,7 @@ export default [
   },
   {
     path: '/products/new',
-    name: 'NewProdut',
+    name: 'NewProduct',
     component: NewProduct
   },
   {

@@ -1,11 +1,10 @@
 <template>
     <div id='product'>
         <h2>NewProduct</h2>
-        Name: {{ newProductName }} <br>
-        Text: {{ newProductText }} <br>
         <form @submit.prevent="onSubmit">
-            <input v-model="newProductName" placeholder="Gib den Product Namen ein"> <br>
-            <input v-model="newProductText" placeholder="Gib den Product Text ein"> <br>
+            <input type="text" v-model="product.name" placeholder="Gib den Product Namen ein"> <br>
+            <input type="number" v-model="product.price" placeholder="Gib den Price ein"> <br>
+            <input type="textarea" v-model="product.description" placeholder="Gib die Product description ein"> <br>
             <button type="submit">Erstellen</button>
         </form>
     </div>
@@ -18,27 +17,17 @@
         name: 'NewProduct',
         data () {
             return {
-                newProductName: "",
-                newProductText: "",
+                product: {
+                    name: "",
+                    price: 0.00,
+                    description: ""
+                },
                 errors: []
             }
         },
         methods: {
-            onSubmit () {
-                const postData = {
-                    name: this.newProductName,
-                    text: this.newProductText,
-                    authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
-                };
-                axios.post('/products.json', postData)
-                    .then((response) => {
-                        console.log(response)
-                        this.$router.push('/products')
-                    })
-                    .catch((error) => {
-                        this.errors.push(error);
-                        console.log("[ERROR - NewProduct] Post data to Rails: " + error.message);
-                    });
+            onSubmit: function() {
+                this.$store.dispatch('create', this.product)
             }
         }
     }
