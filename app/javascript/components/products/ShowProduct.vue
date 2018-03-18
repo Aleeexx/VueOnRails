@@ -25,8 +25,8 @@
         },
         computed: {
             ...mapGetters(['getProduct']),
-            product() {
-                return this.getProduct(this.$route.params.id)
+            product: function () {
+                return this.getProduct
             },
         },
         methods: {

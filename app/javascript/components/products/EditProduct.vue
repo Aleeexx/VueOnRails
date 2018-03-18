@@ -12,18 +12,23 @@
 </template>
 
 <script>
+    import { mapGetters } from "vuex"
+
     export default {
         name: 'EditProduct',
         data () {
             return {
-                product: null,
+                product: {},
                 errors: []
             }
         },
         created () {
-            this.$store.dispatch('fetchProduct', this.$route.params.id).then(() => {
-                this.product = this.$store.getters.getProduct(this.$route.params.id)
+            this.$store.dispatch('fetchProduct', this.$route.params.id).then( () => {
+                this.product = this.getProduct
             })
+        },
+        computed: {
+            ...mapGetters(['getProduct']),
         },
         methods: {
             onSubmit: function() {

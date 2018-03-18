@@ -1,17 +1,27 @@
 import axios from 'axios'
 import router from '../../router'
+import api from '../utils/apiClient'
 
 const state = {
-  products: []
+    products: [],
+    product: {
+        name: "",
+        price: 0.00,
+        description: ""
+    },
+    errors: []
 }
 
 const mutations =  {
-    setProducts: (state, products) => {
+    setData: (state, products) => {
         state.products = products
     },
-    update: (state, product) => {
+    updateList: (state, product) => {
         let productStateIndex = state.products.findIndex(stateProduct => stateProduct.id === product.id)
         state.products.splice(productStateIndex, 1, product)
+    },
+    update: (state, product) => {
+        state.product = Object.assign(state.product, product)
     },
     create: (state, product) => {
         let pos = state.products.findIndex(stateProduct => stateProduct.id > response.data.id)
@@ -22,38 +32,21 @@ const mutations =  {
         let pos = state.products.findIndex(stateProduct => stateProduct.id === id)
         state.products.splice(pos, 1)
     }
-
-
 }
 
 const actions = {
     fetchProducts: (context) => {
-        axios.get(`/products.json`)
-            .then((response) => {
-                context.commit('setProducts', response.data)
-            })
-            .catch((error) => {
-                console.log("[ERROR] fetchProducts()" + error)
-            })
+        api.getAll(context, `/products.json`)
     },
     fetchProduct: (context, id) => {
         return new Promise((resolve, reject) => {
-            axios.get(`/products/${id}.json`)
-                .then((response) => {
-                    let productStateIndex = context.state.products.findIndex(stateProduct => stateProduct.id === response.data.id)
-                    if(productStateIndex === -1) context.commit('create', response.data)
-                    else context.commit('update', response.data)
-                    resolve()
-                })
-                .catch((error) => {
-                    console.log("[ERROR] fetchProduct()" + error)
-                    reject()
-                })
-
+            api.get(context, `/products/${ id }.json`).then(() => {
+                console.log("fetchProduct.then()")
+                resolve()
+            })
         })
     },
     update: (context, product) => {
-        console.log(product)
         let data =  {
             product: {
                 name: product.name,
@@ -64,7 +57,7 @@ const actions = {
         }
         axios.put(`/products/${product.id}.json`, data)
             .then((response) => {
-                context.commit('update', product)
+                context.commit('updateList', product)
             })
             .catch((error) => {
                 console.log("[ERROR] fetchProduct()" + error)
@@ -108,8 +101,9 @@ const actions = {
 }
 
 const getters = {
-  getProducts: (state) => state.products,
-  getProduct: (state) => (id) => state.products.find(stateProduct => stateProduct.id == id)
+    getProducts: (state) => state.products,
+    getProduct: (state) => state.product
+    //getProduct: (state) => (id) => state.products.find(stateProduct => stateProduct.id == id)
 }
 export default {
   state,

@@ -29,7 +29,6 @@
         name: 'ListProduct',
         data () {
             return {
-                errors: []
             }
         },
         created () {
