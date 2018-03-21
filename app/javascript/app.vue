@@ -1,13 +1,14 @@
 <template>
   <div id="app">
 
-    <router-link :to="{ name: 'ListProduct' }">ListProducts</router-link>
-    <!--<router-link :to="{ name: 'Home' }">Home</router-link> |
-    <router-link :to="{ name: 'NewProduct' }">NewProduct</router-link>-->
-    <router-view/>
+  <h1>{{ message }}</h1>
+
+  <router-link :to="{ name: 'ListProduct' }">ListProducts</router-link> |
+  <router-link :to="{ name: 'Home' }">Home</router-link>
+  <!--<router-link :to="{ name: 'NewProduct' }">NewProduct</router-link>-->
+  <router-view/>
 
 
-    <p>{{ message }}</p>
   </div>
 </template>
 
@@ -21,7 +22,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 p {
   font-size: 2em;
   text-align: center;

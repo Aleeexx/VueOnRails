@@ -18,7 +18,7 @@ export default {
                     if(pos === -1) context.commit('create', response.data)
                     else context.commit('updateList', response.data)
                     context.commit('update', response.data)
-                    console.log("resolve getSingle")
+                    //console.log("resolve getSingle")
                     resolve()
                 })
                 .catch((error) => {

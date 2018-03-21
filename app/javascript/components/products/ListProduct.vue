@@ -1,9 +1,9 @@
 <template>
-    <div id='product'>
+    <div id='products'>
         <h2>ListProduct</h2>
-        <p>
-            <router-link :to="{ name: 'NewProduct' }">Neues Product</router-link>
-        </p>
+        <router-link :to="{ name: 'NewProduct' }">Neues Product</router-link>
+
+        <loading v-if="isLoading"></loading>
 
         <div v-for="product in products" class="product-wrapper">
             <div class="product">
@@ -24,8 +24,10 @@
 <script>
     import axios from "axios"
     import { mapGetters } from "vuex"
+    import Loading from "../loading";
 
     export default {
+        components: {Loading},
         name: 'ListProduct',
         data () {
             return {
@@ -35,19 +37,21 @@
             this.$store.dispatch('fetchProducts')
         },
         computed: {
-            ...mapGetters(['getProducts']),
-            products() {
+            ...mapGetters(['getProducts', 'getLoading']),
+            products: function () {
                 return this.getProducts
+            },
+            isLoading: function () {
+                console.log(this.getLoading)
+                return this.getLoading
             }
         },
         methods: {
-
-
         }
     }
 </script>
 
-<style scoped>
+<style>
     .product-wrapper {
         position: relative;
         float: left;

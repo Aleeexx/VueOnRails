@@ -5,6 +5,10 @@ import ShowProduct from '.././components/products/ShowProduct'
 
 export default [
   {
+    path: '/',
+    name: 'Home'
+  },
+  {
     path: '/products/:id/edit',
     name: 'EditProduct',
     component: EditProduct

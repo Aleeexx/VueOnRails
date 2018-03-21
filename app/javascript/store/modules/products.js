@@ -9,7 +9,8 @@ const state = {
         price: 0.00,
         description: ""
     },
-    errors: []
+    errors: [],
+    loading: true
 }
 
 const mutations =  {
@@ -31,17 +32,22 @@ const mutations =  {
     delete: (state, id) => {
         let pos = state.products.findIndex(stateProduct => stateProduct.id === id)
         state.products.splice(pos, 1)
+    },
+    setLoading: (state) => {
+      state.loading = true;
     }
 }
 
 const actions = {
     fetchProducts: (context) => {
-        api.getAll(context, `/products.json`)
+        setTimeout(()=> {
+            api.getAll(context, `/products.json`)
+        }, 1500)
     },
     fetchProduct: (context, id) => {
         return new Promise((resolve, reject) => {
             api.get(context, `/products/${ id }.json`).then(() => {
-                console.log("fetchProduct.then()")
+                //console.log("fetchProduct.then()")
                 resolve()
             })
         })
@@ -79,8 +85,8 @@ const actions = {
                 console.log("[ERROR] Delete Product from Rails: " + error.message);
             })
     },
-    create: (context, product) =>{
-        const data = {
+    create: (context, product) => {
+        let data = {
             name: product.name,
             price: product.price,
             description: product.description,
@@ -88,23 +94,26 @@ const actions = {
         };
         axios.post('/products.json', data)
             .then((response) => {
-                console.log('YOYOYO')
-                console.log(response)
                 context.commit('create', response.data)
                 router.push({ name: 'ListProduct' })
             })
             .catch((error) => {
                 console.log("[ERROR - NewProduct] Post data to Rails: " + error.message);
             });
-
+    },
+    setLoading: (context) => {
+      console.log('asd')
+      cosole.log(!getters.getIsLoading)
+      //context.commit('setLoading', !getters.getIsLoading)
     }
 }
 
 const getters = {
     getProducts: (state) => state.products,
-    getProduct: (state) => state.product
-    //getProduct: (state) => (id) => state.products.find(stateProduct => stateProduct.id == id)
+    getProduct: (state) => state.product,
+    getLoading: (state) => state.loading
 }
+
 export default {
   state,
   mutations,
