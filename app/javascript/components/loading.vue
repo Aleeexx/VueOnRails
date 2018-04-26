@@ -1,7 +1,6 @@
 <template>
     <div id="loading">
-        <!--<i class="fa fa-spinner fa-spin"></i>-->
-        <icon name="spinner" pulse></icon> Loading...
+        <icon name="spinner" pulse scale="2"></icon>
     </div>
 </template>
 
@@ -14,9 +13,10 @@
     }
 </script>
 
-<style>
-    p {
-        font-size: 2em;
-        text-align: center;
+<style scoped>
+    #loading {
+        position: absolute;
+        top: 25px;
+        right: 25px;
     }
 </style>

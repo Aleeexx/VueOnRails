@@ -10,7 +10,7 @@ const state = {
         description: ""
     },
     errors: [],
-    loading: true
+    loading: false
 }
 
 const mutations =  {
@@ -25,7 +25,7 @@ const mutations =  {
         state.product = Object.assign(state.product, product)
     },
     create: (state, product) => {
-        let pos = state.products.findIndex(stateProduct => stateProduct.id > response.data.id)
+        let pos = state.products.findIndex(stateProduct => stateProduct.id > product.id)
         if(pos === -1) pos = state.products.length
         state.products.splice(pos, 0, product)
     },
@@ -33,26 +33,30 @@ const mutations =  {
         let pos = state.products.findIndex(stateProduct => stateProduct.id === id)
         state.products.splice(pos, 1)
     },
-    setLoading: (state) => {
-      state.loading = true;
+    setLoading: (state, newLoading) => {
+      state.loading = newLoading;
+    },
+    setError: (state, error) => {
+        state.errors.push(error)
     }
 }
 
 const actions = {
     fetchProducts: (context) => {
-        setTimeout(()=> {
+        //Loading Icon ON
+        context.dispatch('setLoading', true)
+
+        setTimeout(() => {
             api.getAll(context, `/products.json`)
-        }, 1500)
+            //Loading Icon OFF
+            context.dispatch('setLoading', false)
+        }, 500)
     },
     fetchProduct: (context, id) => {
-        return new Promise((resolve, reject) => {
-            api.get(context, `/products/${ id }.json`).then(() => {
-                //console.log("fetchProduct.then()")
-                resolve()
-            })
-        })
+                api.get(context, `/products/${ id }.json`)
     },
     update: (context, product) => {
+        context.dispatch('setLoading', true)
         let data =  {
             product: {
                 name: product.name,
@@ -61,13 +65,10 @@ const actions = {
             },
             authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
         }
-        axios.put(`/products/${product.id}.json`, data)
-            .then((response) => {
-                context.commit('updateList', product)
-            })
-            .catch((error) => {
-                console.log("[ERROR] fetchProduct()" + error)
-            })
+
+        api.put(context, `/products/${ id }.json`, data).then(() => {
+            context.dispatch('setLoading', false)
+        })
     },
     delete: (context, id) => {
         let data = {
@@ -77,41 +78,43 @@ const actions = {
 
         axios.delete(`/products/${id}.json`, {data: data})
             .then((response) => {
-                console.log(response)
                 context.commit('delete', id)
-                router.push({ name: 'ListProduct' })
+                router.push({ name: 'listProduct' })
             })
             .catch((error) => {
                 console.log("[ERROR] Delete Product from Rails: " + error.message);
             })
     },
     create: (context, product) => {
+        //context.dispatch('setLoading', true)
+
         let data = {
-            name: product.name,
-            price: product.price,
-            description: product.description,
+            product: {
+                name: product.name,
+                price: product.price,
+                description: product.description
+            },
             authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
-        };
-        axios.post('/products.json', data)
-            .then((response) => {
-                context.commit('create', response.data)
-                router.push({ name: 'ListProduct' })
-            })
-            .catch((error) => {
-                console.log("[ERROR - NewProduct] Post data to Rails: " + error.message);
-            });
+        }
+
+        api.post(context, '/products.json', data)
+        //    .then(() => {
+         //   context.dispatch('setLoading', false)
+        //})
     },
-    setLoading: (context) => {
-      console.log('asd')
-      cosole.log(!getters.getIsLoading)
-      //context.commit('setLoading', !getters.getIsLoading)
+    setLoading: (context, value) => {
+      context.commit('setLoading', value)
+    },
+    setError: (context, error) => {
+      context.commit('setError', error)
     }
 }
 
 const getters = {
     getProducts: (state) => state.products,
     getProduct: (state) => state.product,
-    getLoading: (state) => state.loading
+    getLoading: (state) => state.loading,
+    getErrors: (state) => state.errors
 }
 
 export default {

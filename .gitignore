@@ -21,3 +21,4 @@
 tmp/cache/
 .idea/
 yarn-error.log
+public/packs/

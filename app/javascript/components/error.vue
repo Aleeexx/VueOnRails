@@ -13,9 +13,5 @@
     }
 </script>
 
-<style>
-    p {
-        font-size: 2em;
-        text-align: center;
-    }
+<style scoped>
 </style>

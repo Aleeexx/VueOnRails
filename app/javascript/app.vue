@@ -3,9 +3,9 @@
 
   <h1>{{ message }}</h1>
 
-  <router-link :to="{ name: 'ListProduct' }">ListProducts</router-link> |
+  <router-link :to="{ name: 'listProduct' }">ListProducts</router-link> |
   <router-link :to="{ name: 'Home' }">Home</router-link>
-  <!--<router-link :to="{ name: 'NewProduct' }">NewProduct</router-link>-->
+  <!--<router-link :to="{ name: 'newProduct' }">NewProduct</router-link>-->
   <router-view/>
 
 
@@ -14,17 +14,18 @@
 
 <script>
 export default {
-  data: function () {
+  data() {
     return {
-      message: "App.vue"
+      message: "App"
     }
   }
 }
 </script>
 
 <style>
-p {
-  font-size: 2em;
-  text-align: center;
-}
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: block;
+  }
 </style>

@@ -1,7 +1,7 @@
-import EditProduct from '.././components/products/EditProduct'
-import ListProduct from '.././components/products/ListProduct'
-import NewProduct from '.././components/products/NewProduct'
-import ShowProduct from '.././components/products/ShowProduct'
+import editProduct from '../components/products/editProduct'
+import listProduct from '../components/products/listProduct'
+import newProduct from '../components/products/newProduct'
+import showProduct from '../components/products/showProduct'
 
 export default [
   {
@@ -10,22 +10,22 @@ export default [
   },
   {
     path: '/products/:id/edit',
-    name: 'EditProduct',
-    component: EditProduct
+    name: 'editProduct',
+    component: editProduct
   },
   {
     path: '/products',
-    name: 'ListProduct',
-    component: ListProduct
+    name: 'listProduct',
+    component: listProduct
   },
   {
     path: '/products/new',
-    name: 'NewProduct',
-    component: NewProduct
+    name: 'newProduct',
+    component: newProduct
   },
   {
     path: '/products/:id',
-    name: 'ShowProduct',
-    component: ShowProduct
+    name: 'showProduct',
+    component: showProduct
   }
 ]
