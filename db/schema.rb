@@ -10,12 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308210552) do
+ActiveRecord::Schema.define(version: 20180426201805) do
+
+  create_table "offertags", force: :cascade do |t|
+    t.string "value"
+    t.integer "order_id"
+    t.integer "offer_id"
+    t.integer "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["offer_id"], name: "index_offertags_on_offer_id"
+    t.index ["tag_id"], name: "index_offertags_on_tag_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.string "teaser_content"
+    t.string "offer"
+    t.boolean "published"
+    t.datetime "publishing_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "products", force: :cascade do |t|
-    t.string "name"
-    t.decimal "price", precision: 8, scale: 2
-    t.string "description"
+    t.string "title"
+    t.string "teaser"
+    t.string "infotext"
+    t.string "images"
+    t.string "thumbnail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

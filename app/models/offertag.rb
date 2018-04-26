@@ -1,0 +1,2 @@
+class Offertag < ApplicationRecord
+end
