@@ -1,9 +1,13 @@
 import editProduct from '../components/products/editProduct'
-import listProduct from '../components/products/ListProducts'
+import listProduct from '../components/products/listProduct'
 import newProduct from '../components/products/newProduct'
 import showProduct from '../components/products/showProduct'
 
 export default [
+  {
+    path: '/',
+    name: 'Home'
+  },
   {
     path: '/products/:id/edit',
     name: 'editProduct',

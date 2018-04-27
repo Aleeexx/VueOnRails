@@ -1,11 +1,9 @@
 class CreateProducts < ActiveRecord::Migration[5.1]
   def change
     create_table :products do |t|
-      t.string :title
-      t.string :teaser
-      t.string :infotext
-      t.string :images
-      t.string :thumbnail
+      t.string :name
+      t.decimal :price, :precision => 8, :scale => 2
+      t.string :description
 
       t.timestamps
     end

@@ -3,7 +3,7 @@ Rails.application.configure do
   config.webpacker.check_yarn_integrity = true
 
   # Make javascript_pack_tag load assets from webpack-dev-server.
-  config.x.webpacker[:dev_server_host] = 'http://localhost:8080'
+  config.x.webpacker[:dev_server_host] = 'http://localhost:3035'
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -28,6 +28,7 @@ Rails.application.configure do
     }
   else
     config.action_controller.perform_caching = false
+
     config.cache_store = :null_store
   end
 

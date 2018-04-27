@@ -14,6 +14,7 @@ class ProductsController < ApplicationController
   # GET /products/1.json
   def show
     puts @product
+    puts '############'
     respond_to do |format|
       format.json { render :json => @product }
     end
@@ -36,9 +37,11 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
     respond_to do |format|
       if @product.save!
+        puts 'test'
         format.json { render :json => @product, status: :created}
         #format.json { render :json => @product, status: :created}
       else
+        puts 'error'
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
